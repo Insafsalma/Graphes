@@ -1,42 +1,66 @@
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Vector;
+package graphe;
 
-/*
- * Une arête n'est rien de plus que deux renvois à ses extremités
- */
+import java.util.*;
+
 public class Arete {
-	private Sommet orig, extr;
+    private Sommet orig, extr;
+    private int poids;
+    private static int poids_defaut=1;
 
-	Arete(Sommet orig, Sommet extr) {
-		this.orig = orig;
-		this.extr = extr;
-		toutesLesAretes.add(this);
+    Arete(Sommet orig, Sommet extr) {
+        this.orig = orig;
+        this.extr = extr;
+        this.poids= poids_defaut;
+        toutesLesAretes.add(this);
+    }
+
+    public int getPoids() {
+		return poids;
+	}
+    
+    public String getPoidstoString() {
+    	if (Step10.isOriente())
+		return this.orig.getEtiquette()+">>"+poids+">>"+this.extr.getEtiquette();
+    	else return poids+"";
+	}
+
+	public void setPoids(int poids) {
+		this.poids = poids;
+	}
+
+	public static int getPoids_defaut() {
+		return poids_defaut;
+	}
+
+	public static void setPoids_defaut(int poids_defaut) {
+		Arete.poids_defaut = poids_defaut;
 	}
 
 	public Sommet getOrig() {
-		return orig;
-	}
+        return orig;
+    }
 
-	public Sommet getExtr() {
-		return extr;
-	}
+    public Sommet getExtr() {
+        return extr;
+    }
 
-	public String toString() {
-		return "\"" + orig.getEtiquette() + "\" \"" + extr.getEtiquette()
-				+ "\"";
-	}
+    public String toString() {
+        return "\"" + orig.getEtiquette() + "\" \"" + extr.getEtiquette()
+                + "\"";
+    }
+    
+    /* Membres de classe */
+    private static Collection<Arete> toutesLesAretes = new Vector<Arete>();
 
-	/*
-	 * Membres de classe
-	 */
-	private static Collection<Arete> toutesLesAretes = new Vector<Arete>();
+    public static int nombreAretes() {
+        return toutesLesAretes.size();
+    }
 
-	public static int nombreAretes() {
-		return toutesLesAretes.size();
-	}
-
-	public static Iterator<Arete> iterator() {
-		return toutesLesAretes.iterator();
-	}
+    public static Iterator iterator() {
+        return toutesLesAretes.iterator();
+    }
+    
+    public static void clearAretes() {
+    	toutesLesAretes.clear();
+    }
 }
