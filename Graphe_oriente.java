@@ -23,6 +23,7 @@ public class Graphe_oriente extends Graphe {
 	
 	@Override
 	public void FsAps() {
+		matriceAdj();
 		
 	}
 

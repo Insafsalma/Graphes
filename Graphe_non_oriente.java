@@ -24,6 +24,7 @@ public class Graphe_non_oriente extends Graphe {
 	
 	@Override
 	public void FsAps() {
+		matriceAdj();
 		
 	}
 
