@@ -1,7 +1,7 @@
-package graphes;
+package graphe;
 
 public class Algorithme {
-        int[] prem ;
+int[] prem ;
 	int[] pilch;
 	int[] cfc;
 	int[] num;
@@ -11,8 +11,6 @@ public class Algorithme {
 	int p;
 	int[] aps;
 	int[] fs;
-	int[][]a
-	
 	public void empiler(int s, int[] pilch)
 	{
 		int x= pilch[0];
@@ -198,4 +196,33 @@ public class Algorithme {
 			prem[k+1] = s;
 		}
 	}
+	public void calcul_dist(int s, int[] fs, int[] aps, int[] dist) {
+		int n = aps[0];
+		dist = new int[n+1];
+		dist[0]=n;
+		for(int i=1; i<=11; i++) {
+			dist[i]=-1;}
+			dist[s]=0;
+			int d=0;
+			int[] fa = new int[n];
+			fa[0]=s;
+			int t = -1, q = 0, p = 0 ;
+		while (t<q) {
+			d++;
+			for(int i=t+1; i<q; i++) {
+				int u = fa[i];
+				int v;
+				for( int k=aps[u]; (v=fs[k])!=0; k++) {
+					if(dist[v]==-1) {
+						dist[v]=d;
+						fa[++p]=v;
+					}
+			}
+		}
+			t=q;
+			q=p;
+			
+		}
+	}
+	
 }
