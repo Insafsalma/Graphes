@@ -223,6 +223,59 @@ int[] prem ;
 			q=p;
 			
 		}
+		
+	}
+	public int dmin(int[] d, boolean[] InS) {
+		int n = d[0];
+		int min = Integer.MAX_VALUE;
+		int j = -1;
+		for(int i = 1; i<= n ; i++) {
+			if(!InS[i]) {
+				if(d[1]< min) {
+					min = d[i];
+					j = i;
+				}
+			}
+		}
+		return j;
+	}
+	public void dijkstra(int s, int[] fs, int[] aps, int[][] c, int[] d, int[] pred) {
+		int n = aps[0];
+		d = new int[n+1];
+		d[0] = n;
+		pred = new int[n+1];
+		boolean[] InS = new boolean[n+1];
+		for(int i=1; i<=n ; i++) {
+			d[i] = c[s][i];
+			InS[i] = false;
+			if(d[i] != Integer.MAX_VALUE) {
+				pred[i] = s;
+			}else {
+				pred[i] = -1;
+			}
+			InS[s] = true;
+			int cpt = n-1;
+			while(cpt>0) {
+				int j = dmin(d, InS);
+				if(j==-1) {return;}
+				InS[j] = true;
+				int k;
+				for(int p = aps[j]; (k = fs[p]) != 0; p++) {
+					if(!InS[k]) {
+						int v;
+						if(c[j][k] != Integer.MAX_VALUE) {
+							v = d[j] + c[j][k];
+							if(v < d[k]) {
+								d[k]=v;
+								pred[k] =j;
+							}
+						}
+					}
+				}
+				cpt--;		
+			}
+			
+		}
 	}
 	
 }
