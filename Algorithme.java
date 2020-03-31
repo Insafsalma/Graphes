@@ -1,7 +1,7 @@
 package graphes;
 
 public class Algorithme {
-int[] prem ;
+        int[] prem ;
 	int[] pilch;
 	int[] cfc;
 	int[] num;
@@ -11,6 +11,31 @@ int[] prem ;
 	int p;
 	int[] aps;
 	int[] fs;
+	int[][]a
+	public void adj2fsaps(int[][] a,int[] fs,int[] aps)
+	{
+		int nbsom= a[0][0];
+		int nbarcs=a[0][1];
+		fs= new int[nbsom+nbarcs+1];
+		fs[0]=nbsom+nbarcs;
+		aps=new int [nbsom+1];
+		aps[0]=nbsom;
+		int k=1;
+		for(int i=1;i<=nbsom;i++)
+		{
+			aps[i]=k;
+			for(int j=1; j<=nbsom; j++)
+			{
+				if(a[i][j]==1) 
+				{
+					fs[k]=j;
+					k++;
+				}
+			}
+			fs[k]=0;
+			k++;
+		}
+	}
 	public void empiler(int s, int[] pilch)
 	{
 		int x= pilch[0];
