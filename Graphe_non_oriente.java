@@ -21,11 +21,4 @@ public class Graphe_non_oriente extends Graphe {
         	super.adj[a.getExtr().getEtiquette()][a.getOrig().getEtiquette()] = a.getPoids();
         }
 	}
-	
-	@Override
-	public void FsAps() {
-		matriceAdj();
-		
-	}
-
 }
