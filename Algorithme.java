@@ -321,13 +321,13 @@ public void fusionner(int i, int j, int[] prem, int[] pilch, int[]cfc, int[] nbE
 	
 	public void kruskal(Graphe g, Graphe t, int[] prem, int[] pilch, int[] cfc, int[] nbElem)
 	{
-		t.setArete(new Arete[g.n-1]);
+		t.setArete(new Arete[g.getNbrSom()-1]);
 		int x;
 		int y;
 		int i=0,j=0;
-		while (j < g.n-1)
+		while (j < g.getNbrSom()-1)
 		{
-			Arete ar = g.a[i];
+			Arete ar = g.getArete[i];
 			int s= Integer.parseInt(ar.getOrig().getEtiquette());
 			int r= Integer.parseInt(ar.getExtr().getEtiquette());
 			x = cfc[s];
@@ -342,4 +342,5 @@ public void fusionner(int i, int j, int[] prem, int[] pilch, int[]cfc, int[] nbE
 		t.setNbrSom(g.getNbrSom());
 		t.setNbrSom(g.getNbrSom()-1);
 	}
+	
 }
