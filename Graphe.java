@@ -21,7 +21,7 @@ public abstract class Graphe {
 	public Graphe() {
 		// TODO Auto-generated constructor stub
 		
-		//initialisation du Matrice d’adjacence
+		//initialisation du Matrice dâ€™adjacence
 		for ( int i=1; i<= Sommet.nombreSommets(); i++) {
 			for ( int j=1; j<= Sommet.nombreSommets(); j++) {
 				adj[i][j]= 0;
@@ -145,7 +145,7 @@ public abstract class Graphe {
 					}
 				}
 			}
-			t[01]=m-2;
+			t[0]=m-2;
 			for(int k=1; k<=m-2; k++)
 			{
 				for(int i=1; i<=m;i++)
