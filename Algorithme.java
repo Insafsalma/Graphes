@@ -277,5 +277,69 @@ int[] prem ;
 			
 		}
 	}
+public void fusionner(int i, int j, int[] prem, int[] pilch, int[]cfc, int[] nbElem)
+	{
+		if(nbElem[i] < nbElem[j])
+		{
+			int aux=i;
+			i=j;
+			j=aux;
+		}
+		int s= prem[j];
+		cfc[s]=i;
+		while (pilch[s] != 0)
+		{
+			s = pilch[s];
+			cfc[s] = i;
+		}
+		pilch[s] = prem[i];
+		prem[i] = prem[j];
+		nbElem[i] += nbElem[j];
+	}
 	
+	public void trier(Graphe g)
+	{
+		double p;
+		int s, t;
+		int t1;
+		for (int i = 0; i < g.m -1; i++)
+		{
+			for (int j = i + 1; j < g.m; j++)
+			{
+				s= Integer.parseInt(g.getArete(j).getOrig().getEtiquette());
+				t= Integer.parseInt(g.getArete(i).getExtr().getEtiquette());
+				t1= Integer.parseInt(g.getArete(j).getExtr().getEtiquette());
+				if ((g.getArete(j).getPoids() < g.getArete(i).getPoids()) || (g.getArete(j).getPoids() == g.getArete(i).getPoids() && s < t) || (g.getArete(j).getPoids() == g.getArete(i).getPoids() && t1< t))
+				{
+					p = g.getArete(j).getPoids();
+					g.getArete(j).setPoids(g.getArete(i).getPoids());
+					g.getArete(i).setPoids(p);
+				}
+			}
+		}
+	}
+	
+	public void kruskal(Graphe g, Graphe t, int[] prem, int[] pilch, int[] cfc, int[] nbElem)
+	{
+		t.setArete(new Arete[g.n-1]);
+		int x;
+		int y;
+		int i=0,j=0;
+		while (j < g.n-1)
+		{
+			Arete ar = g.a[i];
+			int s= Integer.parseInt(ar.getOrig().getEtiquette());
+			int r= Integer.parseInt(ar.getExtr().getEtiquette());
+			x = cfc[s];
+			y = cfc[r];
+			if (x != y)
+			{
+				t.setArete(j++,g.getArete(i));
+				fusionner(x, y, prem, pilch, cfc, nbElem);
+			}
+			i++;
+		}
+		t.setNbrSom(g.getNbrSom());
+		t.setNbrSom(g.getNbrSom()-1);
+	}
 }
