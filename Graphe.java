@@ -141,6 +141,7 @@ public abstract class Graphe {
 		{
 			int m = A[0][0];
 			t = new int [m-1];
+			t[0]=m-2;
 			for(int i=1; i<=m; i++)
 			{
 				A[i][0]=0;
@@ -152,27 +153,22 @@ public abstract class Graphe {
 					}
 				}
 			}
-			t[0]=m-2;
+
 			for(int k=1; k<=m-2; k++)
 			{
-				for(int i=1; i<=m;i++)
+				int j=1;
+				while(A[j][0]!=1)
 				{
-					if(A[i][0] ==1)
-					{
-						A[i][0]=0;
-						break;
-					}
-					for( int j=1; j<=m; j++)
-					{
-						if(A[i][j] ==1)
-						{
-							t[k]=j;
-						}
-						A[i][j]=0;
-						A[j][i]=0;
-						A[j][0]--;
-					}
-					break;
+					j++;	
+				}
+				A[j][0]=0;
+				int i=1;
+				while(A[j][i]!=1)
+				{
+					A[j][i]=0;
+					A[i][j]=0;
+					A[i][0]--;
+					t[k]=i;
 				}
 			}
 		}
