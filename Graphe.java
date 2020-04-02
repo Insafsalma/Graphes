@@ -172,6 +172,19 @@ public abstract class Graphe {
 				}
 			}
 		}
+	public void affichecfc()
+		{
+			for(int j=1; j<= prem[0];j++)
+			{
+				for(int i=1; i<= cfc[0];i++)
+				{
+					if(cfc[prem[j]] == cfc[i])
+					{
+						//Affiche cfc[i] w safi 7it hadchi est compliqué
+					}
+				}
+			}
+		}
 		public void ordonnancement(int[] fp, int[] app, int[]d, int[] lc, int[] fpc, int[] apps) {
 			int n= app[0];
 			int m=fp[0];
