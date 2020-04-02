@@ -109,6 +109,7 @@ public abstract class Graphe {
 			for(int i=1; i<=Sommet.nombreSommets();i++)
 			{
 				entarj[i]=false;
+				num[i]=0;
 			}
 			int x=0,ind,nbr=0;
 			int n = aps[0];
