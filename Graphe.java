@@ -108,7 +108,7 @@ public abstract class Graphe {
 			cfc[0]= Sommet.nombreSommets();
 			for(int i=1; i<=Sommet.nombreSommets();i++)
 			{
-				Entarj[i]=false;
+				entarj[i]=false;
 			}
 			int x=0,ind,nbr=0;
 			int n = aps[0];
