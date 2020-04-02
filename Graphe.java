@@ -103,6 +103,13 @@ public abstract class Graphe {
 		}
 		public void tarjan()
 		{
+			num[0]= Sommet.nombreSommets();
+			mu[0]=Sommet.nombreSommets();
+			cfc[0]= Sommet.nombreSommets();
+			for(int i=1; i<=Sommet.nombreSommets();i++)
+			{
+				Entarj[i]=false;
+			}
 			int x=0,ind,nbr=0;
 			int n = aps[0];
 			for(int s=1; s<=n; s++)
