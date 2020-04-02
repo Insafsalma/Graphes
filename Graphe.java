@@ -17,6 +17,8 @@ public class Graphe {
 	private boolean[] entarj =new boolean [Sommet.nombreSommets() +1];
 	private int p;
 	private int[] prufer;
+	private int[] rang;
+	private int[] dist;
 	
 	
 	public Graphe() {
@@ -128,13 +130,13 @@ public class Graphe {
                     prem[nbr]=x;
                     entarj[x]=false;
                     ind=x;
-                    while(x!=s)
-                    {
+                 //   while(x!=s)
+                   // {
                         pilch[ind]=x;
                         ind=x;
                         entarj[x]=false;
                         cfc[x]=nbr;
-                    }
+                  //  }
                 }
                 pilch[x]=0;
             }
@@ -211,7 +213,7 @@ public class Graphe {
 			fpc[0]=kc;
 		}
 		
-		public void rang(int[] rang, int[] fs, int[] aps) {
+		public void rang() {
 			int n = aps[0];
 			int taillefs = fs[0];
 			int s,k,h,t;
@@ -257,11 +259,11 @@ public class Graphe {
 			}
 		}
 		
-		public void calcul_dist(int s, int[] fs, int[] aps, int[] dist) {
+		public void calcul_dist(int s) {
 			int n = aps[0];
 			dist = new int[n+1];
 			dist[0]=n;
-			for(int i=1; i<=11; i++) {
+			for(int i=1; i<=Sommet.nombreSommets(); i++) {
 				dist[i]=-1;}
 				dist[s]=0;
 				int d=0;
@@ -356,6 +358,24 @@ public class Graphe {
 			}
 			return s;
 		}
+		
+		public String RangtoString() {
+			String s="";
+			for(int i=0; i<rang.length;i++) {
+				s += " | "+rang[i];
+			}
+			return s;
+		}
+		
+		public String DistancetoString() {
+			String s="";
+			for(int i=0; i<dist.length;i++) {
+				s += " | "+dist[i];
+			}
+			return s;
+		}
+		
+		
 		
 	}
 

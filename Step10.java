@@ -189,7 +189,8 @@ public class Step10 extends JPanel implements MouseListener,
         item = new JMenuItem("Dijistra");
         item.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                enregistrement();
+            	etat = RESULTAT_DJIKSTRA;
+                rafraichirBarreEtat();
             }
         });
         
@@ -198,7 +199,8 @@ public class Step10 extends JPanel implements MouseListener,
         item = new JMenuItem("Ordonnancement");
         item.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                enregistrement();
+            	etat = RESULTAT_ORDONNANCEMENT;
+                rafraichirBarreEtat();
             }
         });
         
@@ -207,7 +209,8 @@ public class Step10 extends JPanel implements MouseListener,
         item = new JMenuItem("Calcul de distaance");
         item.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                enregistrement();
+            	etat = RESULTAT_CALCUL_DISTANCE;
+                rafraichirBarreEtat();
             }
         });
         
@@ -216,7 +219,8 @@ public class Step10 extends JPanel implements MouseListener,
         item = new JMenuItem("Determination du rang");
         item.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                enregistrement();
+            	etat = RESULTAT_RANG;
+                rafraichirBarreEtat();
             }
         });
      
@@ -236,6 +240,9 @@ public class Step10 extends JPanel implements MouseListener,
         case ETIQUETAGE_SOMMET:
             barreEtat.setText("Etiquetage sommet : désigner le sommet à étiqueter");
             break;
+        case RESULTAT_CALCUL_DISTANCE:
+        	barreEtat.setText("Selectionner un sommet");
+        	break;
         case DEBUT_DEPLACEMENT_SOMMET:
             barreEtat.setText("Deplacement sommet : traîner le sommet à déplacer");
             break;
@@ -303,7 +310,7 @@ public class Step10 extends JPanel implements MouseListener,
         	
         	barreEtat.setText("Tarjan");
         	int ty = JOptionPane.showConfirmDialog(this,
-                    "Tarjan:  "+ gtarjan.CFCtoString(), 
+                    "CFC:  "+ gtarjan.CFCtoString(), 
                     "Tarjan",
                     JOptionPane.CLOSED_OPTION);
         	/*if (typ == JOptionPane.OK_OPTION) {
@@ -370,25 +377,36 @@ public class Step10 extends JPanel implements MouseListener,
                     "ORDONNANCEMENT",
                     JOptionPane.CLOSED_OPTION);
         	break;
-        case RESULTAT_CALCUL_DISTANCE:
+      //  case RESULTAT_CALCUL_DISTANCE:
         	
-        	Graphe_oriente CALCUL_DISTANCE = new Graphe_oriente();
+        	/*Graphe_oriente CALCUL_DISTANCE = new Graphe_oriente();
         	CALCUL_DISTANCE.tarjan();
         	
         	barreEtat.setText("CALCUL_DISTANCE");
-        	int typeCALCUL_DISTANCE = JOptionPane.showConfirmDialog(this,
+        	String texte = JOptionPane.showInputDialog(this, "Nouveau texte:",
+                    "Définition d'une étiquette", JOptionPane.QUESTION_MESSAGE);
+        /*	int typeCALCUL_DISTANCE = JOptionPane.showConfirmDialog(this,
                     "CALCUL_DISTANCE:  "+ CALCUL_DISTANCE.CFCtoString(), 
                     "CALCUL_DISTANCE",
-                    JOptionPane.CLOSED_OPTION);
-        	break;
+                    JOptionPane.OK_CANCEL_OPTION);
+        	if (texte != null) {
+        		int typeCALCUL_DISTANC = JOptionPane.showConfirmDialog(this,
+                        "CALCUL_DISTANCE:  "+ CALCUL_DISTANCE.CFCtoString(), 
+                        "CALCUL_DISTANCE",
+                        JOptionPane.CLOSED_OPTION);
+        	}
+            
+               // sommet.setEtiquette(Integer.parseInt(texte));
+            repaint();
+        	break;*/
         case RESULTAT_RANG:
         	
         	Graphe_oriente RESULTAT_RANG = new Graphe_oriente();
-        	RESULTAT_RANG.tarjan();
+        	RESULTAT_RANG.rang();
         	
-        	barreEtat.setText("CALCUL_DISTANCE");
+        	barreEtat.setText("RANG");
         	int typeRESULTAT_RANG = JOptionPane.showConfirmDialog(this,
-                    "RESULTAT_RANG:  "+ RESULTAT_RANG.CFCtoString(), 
+                    "RESULTAT_RANG:  "+ RESULTAT_RANG.RangtoString(), 
                     "RESULTAT_RANG",
                     JOptionPane.CLOSED_OPTION);
         	break;
@@ -487,7 +505,24 @@ public class Step10 extends JPanel implements MouseListener,
         	String t = JOptionPane.showInputDialog(this, "Entrer poids par defaut"+Arete.getPoids_defaut() ,
                     "Poids par defaut", JOptionPane.QUESTION_MESSAGE);
         	 Arete.setPoids_defaut(Integer.parseInt(t));
-        case SET_TYPE_GRAPHE:
+        	 return;
+        case RESULTAT_CALCUL_DISTANCE:
+        	//barreEtat.setText("Selectionner un sommet");
+            sommet = sommetVoisin(evt.getX(), evt.getY());
+            
+            Graphe_oriente gDistace = new Graphe_oriente();
+            gDistace.calcul_dist(sommet.getEtiquette());
+        	
+            
+            if (sommet == null)
+                return;
+             JOptionPane.showConfirmDialog(this,
+            		 	gDistace.DistancetoString(), 
+                        "Distances de:  "+ sommet.getEtiquette(),
+                        JOptionPane.CLOSED_OPTION);
+            return;
+
+       // case SET_TYPE_GRAPHE:
         	/*int type = JOptionPane.showConfirmDialog(this,
                     "Type graphe courant est:  "+Algorithme.typeGraphe()+"\n Si vous choisissez de changer le type de graphe, le graphe courant sera perdu", 
                     "changer type graphe",
