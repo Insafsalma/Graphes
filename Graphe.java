@@ -2,26 +2,27 @@ package graphe;
 
 import java.util.Iterator;
 
-public abstract class Graphe {
+public class Graphe {
 
-	protected int adj [][] = new int [Sommet.nombreSommets()][Sommet.nombreSommets()];
+	protected int adj [][] = new int [Sommet.nombreSommets()+1][Sommet.nombreSommets()+1];
 	protected int fs [] = new int[Sommet.nombreSommets()+Arete.nombreAretes()+1];
 	protected int aps [] = new int [Sommet.nombreSommets() +1];
 	
-	private int[] prem ;
-	private int[] pilch;
-	private int[] cfc;
-	private int[] num;
-	private int[] mu;
-	private int[] tarj;
-	private boolean[] entarj;
+	private int[] prem =new int [Sommet.nombreSommets() +1];
+	private int[] pilch=new int [Sommet.nombreSommets() +1];
+	private int[] cfc=new int [Sommet.nombreSommets() +1];
+	private int[] num=new int [Sommet.nombreSommets() +1];
+	private int[] mu=new int [Sommet.nombreSommets() +1];
+	private int[] tarj = new int [Sommet.nombreSommets() +1];
+	private boolean[] entarj =new boolean [Sommet.nombreSommets() +1];
 	private int p;
+	private int[] prufer;
 	
 	
 	public Graphe() {
 		// TODO Auto-generated constructor stub
 		
-		//initialisation du Matrice d’adjacence
+		//initialisation du Matrice d�adjacence
 		for ( int i=1; i<= Sommet.nombreSommets(); i++) {
 			for ( int j=1; j<= Sommet.nombreSommets(); j++) {
 				adj[i][j]= 0;
@@ -33,11 +34,13 @@ public abstract class Graphe {
 		//FsAps();
 	}
 	
-	public abstract void matriceAdj();
+	public void matriceAdj() {
+		
+	}
+	
 	
 	public void FsAps() {
-		matriceAdj();
-		
+		matriceAdj();	
 		int nbsom= adj[0][0];
 		int nbarcs = adj[0][1];
 		fs= new int[nbsom+nbarcs+1];
@@ -60,9 +63,7 @@ public abstract class Graphe {
 			k++;
 		}
 	}
-		
-		
-		
+	
 		public void empiler(int s,  int[] pilch)
 		{
 			int x= pilch[0];
@@ -101,91 +102,80 @@ public abstract class Graphe {
 				}
 			}
 		}
+		
 		public void tarjan()
-		{
-			num[0]= Sommet.nombreSommets();
-			mu[0]=Sommet.nombreSommets();
-			cfc[0]= Sommet.nombreSommets();
-			for(int i=1; i<=Sommet.nombreSommets();i++)
-			{
-				entarj[i]=false;
-				num[i]=0;
-			}
-			int x=0,ind,nbr=0;
-			int n = aps[0];
-			for(int s=1; s<=n; s++)
-			{
-				if(num[s] == 0)
-				{
-					traverse(s);
-				}
-				if(mu[s]==num[s])
-				{
-					nbr++;
-					x= depiler(tarj);
-					prem[nbr]=x;
-					entarj[x]=false;
-					ind=x;
-					while(x!=s)
-					{
-						pilch[ind]=x;
-						ind=x;
-						entarj[x]=false;
-						cfc[x]=nbr;
-					}
-				}
-				pilch[x]=0;
-			}
-		}
+        {
+            int x=0,ind,nbr=0;
+            int n = aps[0];
+            num[0]= Sommet.nombreSommets();
+            mu[0]=Sommet.nombreSommets();
+            cfc[0]= Sommet.nombreSommets();
+            for(int i=1; i<=Sommet.nombreSommets();i++)
+            {
+                entarj[i]=false;
+                num[i]=0;
+            }
+            for(int s=1; s<=n; s++)
+            {
+                if(num[s] == 0)
+                {
+                    traverse(s);
+                }
+                if(mu[s]==num[s])
+                {
+                    nbr++;
+                    x= depiler(tarj);
+                    prem[nbr]=x;
+                    entarj[x]=false;
+                    ind=x;
+                    while(x!=s)
+                    {
+                        pilch[ind]=x;
+                        ind=x;
+                        entarj[x]=false;
+                        cfc[x]=nbr;
+                    }
+                }
+                pilch[x]=0;
+            }
+        }
 
-		public void prufer(int[][]A, int[]t) 
-		{
-			int m = A[0][0];
-			t = new int [m-1];
-			t[0]=m-2;
-			for(int i=1; i<=m; i++)
-			{
-				A[i][0]=0;
-				for(int j=1; j<=m; j++)
-				{
-					if(A[i][j] ==1)
-					{
-						A[i][0]++;
-					}
-				}
-			}
-
-			for(int k=1; k<=m-2; k++)
-			{
-				int j=1;
-				while(A[j][0]!=1)
-				{
-					j++;	
-				}
-				A[j][0]=0;
-				int i=1;
-				while(A[j][i]!=1)
-				{
-					A[j][i]=0;
-					A[i][j]=0;
-					A[i][0]--;
-					t[k]=i;
-				}
-			}
-		}
-	public void affichecfc()
-		{
-			for(int j=1; j<= prem[0];j++)
-			{
-				for(int i=1; i<= cfc[0];i++)
-				{
-					if(cfc[prem[j]] == cfc[i])
-					{
-						//Affiche cfc[i] w safi 7it hadchi est compliqué
-					}
-				}
-			}
-		}
+		public void prufer() 
+		   {
+            int m = adj[0][0];
+            prufer = new int [m-1];
+            prufer[0]=m-2;
+            for(int i=1; i<=m; i++)
+            {
+                adj[i][0]=0;
+                for(int j=1; j<=m; j++)
+                {
+                    if(adj[i][j] ==1)
+                    {
+                        adj[i][0]++;
+                    }
+                }
+            }
+             for(int k=1 ; k<=m-2 ; k++){
+                    int i = 1 ;
+                    for(i=1 ; i<=m ; i++){
+                      if(adj[i][0] == 1){ 
+                        adj[i][0] = 0;
+                        break;
+                      }
+                    }
+                    for(int j=1 ; j<=m ; j++){
+                      if(adj[i][j] == 1){
+                    	  prufer[k]    = j;
+                        adj[i][j] = 0; 
+                        adj[j][i] = 0;
+                        adj[j][0]--;
+                        break;
+                      }
+                    }
+                  } 
+        }
+		
 		public void ordonnancement(int[] fp, int[] app, int[]d, int[] lc, int[] fpc, int[] apps) {
 			int n= app[0];
 			int m=fp[0];
@@ -220,6 +210,7 @@ public abstract class Graphe {
 			}
 			fpc[0]=kc;
 		}
+		
 		public void rang(int[] rang, int[] fs, int[] aps) {
 			int n = aps[0];
 			int taillefs = fs[0];
@@ -265,6 +256,7 @@ public abstract class Graphe {
 				prem[k+1] = s;
 			}
 		}
+		
 		public void calcul_dist(int s, int[] fs, int[] aps, int[] dist) {
 			int n = aps[0];
 			dist = new int[n+1];
@@ -294,6 +286,7 @@ public abstract class Graphe {
 			}
 			
 		}
+		
 		public int dmin(int[] d, boolean[] InS) {
 			int n = d[0];
 			int min = Integer.MAX_VALUE;
@@ -308,6 +301,7 @@ public abstract class Graphe {
 			}
 			return j;
 		}
+		
 		public void dijkstra(int s, int[] fs, int[] aps, int[][] c, int[] d, int[] pred) {
 			int n = aps[0];
 			d = new int[n+1];
@@ -343,11 +337,26 @@ public abstract class Graphe {
 					}
 					cpt--;		
 				}
-				
 			}
 		}
 		
+		public String prufertoString() {
+			String s ="";
+			for(int i=0; i<prufer.length;i++) {
+				s += " | "+prufer[i];
+			}
+			s+=" | ";
+			return s;
+		}
+		
+		public String CFCtoString() {
+			String s="";
+			for(int i=0; i<cfc.length;i++) {
+				s += " | "+cfc[i];
+			}
+			return s;
+		}
+		
 	}
-	
 
 

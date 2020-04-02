@@ -9,6 +9,8 @@ import javax.swing.border.*;
 
 public class Step10 extends JPanel implements MouseListener,
         MouseMotionListener {
+	
+	//constantes pour etat
     static final int CREATION_SOMMET = 1;
     static final int ETIQUETAGE_SOMMET = 2;
     static final int DEBUT_DEPLACEMENT_SOMMET = 3;
@@ -19,6 +21,15 @@ public class Step10 extends JPanel implements MouseListener,
     static final int SUITE_MODFICATION_POIDS_ARETE = 8;    
     static final int SET_MODFICATION_POIDS_DEFAUT = 9;
     static final int SET_TYPE_GRAPHE = 10;
+    static final int RESULTAT_PRUFER = 11;
+    static final int RESULTAT_TARJAN = 12;
+    static final int RESULTAT_KRUSKAL = 14;
+    static final int RESULTAT_DJIKSTRA = 15;
+    static final int RESULTAT_ORDONNANCEMENT = 16;
+    static final int RESULTAT_CALCUL_DISTANCE = 17;
+    static final int RESULTAT_RANG = 18;
+    
+    
 
     static final int TOUT_PRES = 10;
 
@@ -144,7 +155,8 @@ public class Step10 extends JPanel implements MouseListener,
         item = new JMenuItem("Prufer");
         item.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                restauration();
+                etat = RESULTAT_PRUFER;
+                rafraichirBarreEtat();
             }
         });
         menu.add(item);
@@ -152,7 +164,8 @@ public class Step10 extends JPanel implements MouseListener,
         item = new JMenuItem("Kruskal");
         item.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                enregistrement();
+                etat = RESULTAT_KRUSKAL;
+                rafraichirBarreEtat();
             }
         });
         menu.add(item);
@@ -166,7 +179,8 @@ public class Step10 extends JPanel implements MouseListener,
         item = new JMenuItem("Tarjan");
         item.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                enregistrement();
+                etat = RESULTAT_TARJAN;
+                rafraichirBarreEtat();
             }
         });
         
@@ -212,6 +226,9 @@ public class Step10 extends JPanel implements MouseListener,
     }
 
     void rafraichirBarreEtat() {
+    	
+    	
+    	
         switch (etat) {
         case CREATION_SOMMET:
             barreEtat.setText("Creation sommet : cliquer pour designer l'endroit où le poser");
@@ -239,6 +256,7 @@ public class Step10 extends JPanel implements MouseListener,
         	break;
         case SET_MODFICATION_POIDS_DEFAUT:
         	barreEtat.setText("Modification poids par defaut");
+        	break;
         case SET_TYPE_GRAPHE:
         	barreEtat.setText("Modification du type de graphe");
         	int type = JOptionPane.showConfirmDialog(this,
@@ -252,7 +270,128 @@ public class Step10 extends JPanel implements MouseListener,
         		oriente = !oriente;
         		repaint();
         	}
+        	break;
+        case RESULTAT_PRUFER:
+        	//barreEtat.setText("Prufer");
         	
+        	Graphe_oriente g = new Graphe_oriente();
+        	g.prufer();
+        	
+        	
+        	
+        	
+        	barreEtat.setText("Prufer");
+        	int typ = JOptionPane.showConfirmDialog(this,
+                    "Prufer:  "+ g.prufertoString(), 
+                    "PRUFER",
+                    JOptionPane.CLOSED_OPTION);
+        	/*if (typ == JOptionPane.OK_OPTION) {
+        		Arete.clearAretes();
+        		Sommet.clearSommets();
+        		etat=CREATION_SOMMET;
+        		oriente = !oriente;
+        		repaint();
+        	}*/
+        	break;
+        case RESULTAT_TARJAN:
+        	//barreEtat.setText("Tarjan");
+        	
+        	Graphe_oriente gtarjan = new Graphe_oriente();
+        	//gtarjan.prufer();	
+        	gtarjan.tarjan();
+        	
+        	
+        	barreEtat.setText("Tarjan");
+        	int ty = JOptionPane.showConfirmDialog(this,
+                    "Tarjan:  "+ gtarjan.CFCtoString(), 
+                    "Tarjan",
+                    JOptionPane.CLOSED_OPTION);
+        	/*if (typ == JOptionPane.OK_OPTION) {
+        		Arete.clearAretes();
+        		Sommet.clearSommets();
+        		etat=CREATION_SOMMET;
+        		oriente = !oriente;
+        		repaint();
+        	}*/
+        	break;
+        	
+        case RESULTAT_KRUSKAL:
+        	//barreEtat.setText("Tarjan");
+        	
+        	Graphe_oriente gkruskal = new Graphe_oriente();
+        	//gtarjan.prufer();	
+        	gkruskal.tarjan();
+        	
+        	
+        	barreEtat.setText("Kruskal");
+        	int typeK = JOptionPane.showConfirmDialog(this,
+                    "Kruskal:  "+ gkruskal.CFCtoString(), 
+                    "Kruskal",
+                    JOptionPane.CLOSED_OPTION);
+        	/*if (typ == JOptionPane.OK_OPTION) {
+        		Arete.clearAretes();
+        		Sommet.clearSommets();
+        		etat=CREATION_SOMMET;
+        		oriente = !oriente;
+        		repaint();
+        	}*/
+        	break;
+        	
+        case RESULTAT_DJIKSTRA:
+        	//barreEtat.setText("Tarjan");
+        	
+        	Graphe_oriente DJIKSTRA = new Graphe_oriente();
+        	//gtarjan.prufer();	
+        	DJIKSTRA.tarjan();
+        	
+        	
+        	barreEtat.setText("DJIKSTRA");
+        	int typeDJIKSTRAK = JOptionPane.showConfirmDialog(this,
+                    "DJIKSTRA:  "+ DJIKSTRA.CFCtoString(), 
+                    "DJIKSTRA",
+                    JOptionPane.CLOSED_OPTION);
+        	/*if (typ == JOptionPane.OK_OPTION) {
+        		Arete.clearAretes();
+        		Sommet.clearSommets();
+        		etat=CREATION_SOMMET;
+        		oriente = !oriente;
+        		repaint();
+        	}*/
+        	break;
+        	
+        case RESULTAT_ORDONNANCEMENT:
+        	
+        	Graphe_oriente ORDONNANCEMENT = new Graphe_oriente();
+        	ORDONNANCEMENT.tarjan();
+        	
+        	barreEtat.setText("ORDONNANCEMENT");
+        	int typeORDONNANCEMENT = JOptionPane.showConfirmDialog(this,
+                    "ORDONNANCEMENT:  "+ ORDONNANCEMENT.CFCtoString(), 
+                    "ORDONNANCEMENT",
+                    JOptionPane.CLOSED_OPTION);
+        	break;
+        case RESULTAT_CALCUL_DISTANCE:
+        	
+        	Graphe_oriente CALCUL_DISTANCE = new Graphe_oriente();
+        	CALCUL_DISTANCE.tarjan();
+        	
+        	barreEtat.setText("CALCUL_DISTANCE");
+        	int typeCALCUL_DISTANCE = JOptionPane.showConfirmDialog(this,
+                    "CALCUL_DISTANCE:  "+ CALCUL_DISTANCE.CFCtoString(), 
+                    "CALCUL_DISTANCE",
+                    JOptionPane.CLOSED_OPTION);
+        	break;
+        case RESULTAT_RANG:
+        	
+        	Graphe_oriente RESULTAT_RANG = new Graphe_oriente();
+        	RESULTAT_RANG.tarjan();
+        	
+        	barreEtat.setText("CALCUL_DISTANCE");
+        	int typeRESULTAT_RANG = JOptionPane.showConfirmDialog(this,
+                    "RESULTAT_RANG:  "+ RESULTAT_RANG.CFCtoString(), 
+                    "RESULTAT_RANG",
+                    JOptionPane.CLOSED_OPTION);
+        	break;
 
         }
     }

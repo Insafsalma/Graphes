@@ -8,7 +8,7 @@ public class Graphe_non_oriente extends Graphe {
 		// TODO Auto-generated constructor stub
 		super();
 		matriceAdj();
-		FsAps();
+		super.FsAps();
 	}
 	
 	@Override
