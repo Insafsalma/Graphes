@@ -29,14 +29,14 @@ public class Step10 extends JPanel implements MouseListener,
     static final int RESULTAT_CALCUL_DISTANCE = 17;
     static final int RESULTAT_RANG = 18;
     
-    
-
     static final int TOUT_PRES = 10;
 
     private JLabel barreEtat;
     private int etat;
     private Sommet sommetSelectionne;
-    private static boolean oriente = true;
+    private static boolean oriente;
+    private static boolean value;
+    private static boolean ok;
 
     Step10() {
         this.setBackground(Color.WHITE);
@@ -55,6 +55,55 @@ public class Step10 extends JPanel implements MouseListener,
     }
 
     JMenuBar creerBarreMenus() {
+    	
+    	//oriente = true;
+    	
+        JFrame frame = new JFrame("Type de graphe");
+        String[] tGraphe = { "oriente", "non-oriente" };
+        String TypeOriente = (String) JOptionPane.showInputDialog(frame, 
+            "Choisir le type de graphe",
+            "Type de graphe",
+            JOptionPane.CLOSED_OPTION, 
+            null, 
+            tGraphe, 
+            tGraphe[0]);
+        if (TypeOriente == "oriente") {
+        	oriente = true;
+        	ok = true;
+        }
+        else if (TypeOriente =="non-oriente") {
+        	oriente = false;
+        	ok = true;
+        }
+        else if (TypeOriente == null) {
+        	
+        }
+        
+        
+        JFrame frame2 = new JFrame("Type de graphe");
+        String[] tGrapheV = { "value", "non-value" };
+        String TypeValue = (String) JOptionPane.showInputDialog(frame2, 
+            "Choisir le type de graphe",
+            "Type de graphe",
+            JOptionPane.CLOSED_OPTION, 
+            null, 
+            tGrapheV, 
+            tGrapheV[0]);
+        
+        if (TypeValue == "value") {
+        	value = true;
+        	ok = true;
+        }
+        else if (TypeValue =="non-value") {
+        	value = false;
+        	ok = true;
+        }
+        else if (TypeValue == null) {
+        	ok = false;
+        }
+    	
+    	
+    	
         JMenuBar barre = new JMenuBar();
         JMenu menu = new JMenu("Fichier");
         barre.add(menu);
@@ -119,6 +168,7 @@ public class Step10 extends JPanel implements MouseListener,
         
         menu.add(item);
 
+        if(value) {
         item = new JMenuItem("Mofification du poids-arête");
         item.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
@@ -129,6 +179,7 @@ public class Step10 extends JPanel implements MouseListener,
         
         menu.add(item);
 
+        
         item = new JMenuItem("Mofification du poids par defaut");
         item.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
@@ -138,7 +189,9 @@ public class Step10 extends JPanel implements MouseListener,
         });
         
         menu.add(item);
+        }
 
+        /*
         item = new JMenuItem("Mofification de type de graphe");
         item.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
@@ -146,86 +199,95 @@ public class Step10 extends JPanel implements MouseListener,
                 rafraichirBarreEtat();
             }
         });
+        */
         
         menu.add(item);
         
         menu = new JMenu("Algorithme");
         barre.add(menu);
+        
+        if ((oriente)&&(!value)&&(ok)) {
+        	item = new JMenuItem("Tarjan");
+            item.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent evt) {
+                    etat = RESULTAT_TARJAN;
+                    rafraichirBarreEtat();
+                }
+            });
+            
+            menu.add(item);
+            
+            item = new JMenuItem("Calcul de distaance");
+            item.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent evt) {
+                	etat = RESULTAT_CALCUL_DISTANCE;
+                    rafraichirBarreEtat();
+                }
+            });
+            
+            menu.add(item);
 
-        item = new JMenuItem("Prufer");
-        item.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                etat = RESULTAT_PRUFER;
-                rafraichirBarreEtat();
-            }
-        });
-        menu.add(item);
-
-        item = new JMenuItem("Kruskal");
-        item.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                etat = RESULTAT_KRUSKAL;
-                rafraichirBarreEtat();
-            }
-        });
-        menu.add(item);
-
+            item = new JMenuItem("Determination du rang");
+            item.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent evt) {
+                	etat = RESULTAT_RANG;
+                    rafraichirBarreEtat();
+                }
+            });
+         
+            menu.add(item);
+        	
+        }
+        else if  ((oriente)&&(value)&&(ok)) {
+        	  item = new JMenuItem("Dijistra");
+              item.addActionListener(new ActionListener() {
+                  public void actionPerformed(ActionEvent evt) {
+                  	etat = RESULTAT_DJIKSTRA;
+                      rafraichirBarreEtat();
+                  }
+              });
+              
+              menu.add(item);
+        	
+        }
+        else if  ((!oriente)&&(value)&&(ok)) {
+        	
+        	 item = new JMenuItem("Kruskal");
+             item.addActionListener(new ActionListener() {
+                 public void actionPerformed(ActionEvent evt) {
+                     etat = RESULTAT_KRUSKAL;
+                     rafraichirBarreEtat();
+                 }
+             });
+             menu.add(item);
+        	
+        }
+        else if  ((!oriente)&&(!value)&&(ok)) {
+        	 item = new JMenuItem("Prufer");
+             item.addActionListener(new ActionListener() {
+                 public void actionPerformed(ActionEvent evt) {
+                     etat = RESULTAT_PRUFER;
+                     rafraichirBarreEtat();
+                 }
+             });
+             menu.add(item);
+             
+             item = new JMenuItem("Ordonnancement");
+             item.addActionListener(new ActionListener() {
+                 public void actionPerformed(ActionEvent evt) {
+                 	etat = RESULTAT_ORDONNANCEMENT;
+                     rafraichirBarreEtat();
+                 }
+             });
+             
+             menu.add(item);
+        	
+        }
        // menu.addSeparator();
       /*  item = new JMenuItem("Quitter");
         menu.add(item);*/
         
-        menu.add(item);
-
-        item = new JMenuItem("Tarjan");
-        item.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                etat = RESULTAT_TARJAN;
-                rafraichirBarreEtat();
-            }
-        });
-        
-        menu.add(item);
-
-        item = new JMenuItem("Dijistra");
-        item.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-            	etat = RESULTAT_DJIKSTRA;
-                rafraichirBarreEtat();
-            }
-        });
-        
-        menu.add(item);
-
-        item = new JMenuItem("Ordonnancement");
-        item.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-            	etat = RESULTAT_ORDONNANCEMENT;
-                rafraichirBarreEtat();
-            }
-        });
-        
-        menu.add(item);
-
-        item = new JMenuItem("Calcul de distaance");
-        item.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-            	etat = RESULTAT_CALCUL_DISTANCE;
-                rafraichirBarreEtat();
-            }
-        });
-        
-        menu.add(item);
-
-        item = new JMenuItem("Determination du rang");
-        item.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-            	etat = RESULTAT_RANG;
-                rafraichirBarreEtat();
-            }
-        });
-     
-        menu.add(item);
-
+      //  menu.add(item);
         return barre;
     }
 
@@ -292,41 +354,22 @@ public class Step10 extends JPanel implements MouseListener,
                     "Prufer:  "+ g.prufertoString(), 
                     "PRUFER",
                     JOptionPane.CLOSED_OPTION);
-        	/*if (typ == JOptionPane.OK_OPTION) {
-        		Arete.clearAretes();
-        		Sommet.clearSommets();
-        		etat=CREATION_SOMMET;
-        		oriente = !oriente;
-        		repaint();
-        	}*/
         	break;
         case RESULTAT_TARJAN:
-        	//barreEtat.setText("Tarjan");
-        	
         	Graphe_oriente gtarjan = new Graphe_oriente();
-        	//gtarjan.prufer();	
         	gtarjan.tarjan();
-        	
-        	
+      	
         	barreEtat.setText("Tarjan");
         	int ty = JOptionPane.showConfirmDialog(this,
                     "CFC:  "+ gtarjan.CFCtoString(), 
                     "Tarjan",
                     JOptionPane.CLOSED_OPTION);
-        	/*if (typ == JOptionPane.OK_OPTION) {
-        		Arete.clearAretes();
-        		Sommet.clearSommets();
-        		etat=CREATION_SOMMET;
-        		oriente = !oriente;
-        		repaint();
-        	}*/
         	break;
         	
         case RESULTAT_KRUSKAL:
-        	//barreEtat.setText("Tarjan");
+        	
         	
         	Graphe_oriente gkruskal = new Graphe_oriente();
-        	//gtarjan.prufer();	
         	gkruskal.tarjan();
         	
         	
@@ -335,13 +378,7 @@ public class Step10 extends JPanel implements MouseListener,
                     "Kruskal:  "+ gkruskal.CFCtoString(), 
                     "Kruskal",
                     JOptionPane.CLOSED_OPTION);
-        	/*if (typ == JOptionPane.OK_OPTION) {
-        		Arete.clearAretes();
-        		Sommet.clearSommets();
-        		etat=CREATION_SOMMET;
-        		oriente = !oriente;
-        		repaint();
-        	}*/
+        
         	break;
         	
         case RESULTAT_DJIKSTRA:
@@ -357,13 +394,7 @@ public class Step10 extends JPanel implements MouseListener,
                     "DJIKSTRA:  "+ DJIKSTRA.CFCtoString(), 
                     "DJIKSTRA",
                     JOptionPane.CLOSED_OPTION);
-        	/*if (typ == JOptionPane.OK_OPTION) {
-        		Arete.clearAretes();
-        		Sommet.clearSommets();
-        		etat=CREATION_SOMMET;
-        		oriente = !oriente;
-        		repaint();
-        	}*/
+        	
         	break;
         	
         case RESULTAT_ORDONNANCEMENT:
@@ -384,7 +415,8 @@ public class Step10 extends JPanel implements MouseListener,
         	
         	barreEtat.setText("CALCUL_DISTANCE");
         	String texte = JOptionPane.showInputDialog(this, "Nouveau texte:",
-                    "Définition d'une étiquette", JOptionPane.QUESTION_MESSAGE);
+                    "Définition d'une étiquette", JOptionPane.QUESTION_MESSAGE);+++++++++++
+                    
         /*	int typeCALCUL_DISTANCE = JOptionPane.showConfirmDialog(this,
                     "CALCUL_DISTANCE:  "+ CALCUL_DISTANCE.CFCtoString(), 
                     "CALCUL_DISTANCE",
@@ -518,7 +550,7 @@ public class Step10 extends JPanel implements MouseListener,
                 return;
              JOptionPane.showConfirmDialog(this,
             		 	gDistace.DistancetoString(), 
-                        "Distances de:  "+ sommet.getEtiquette(),
+                        "Distances de sommet  "+ sommet.getEtiquette(),
                         JOptionPane.CLOSED_OPTION);
             return;
 
@@ -663,6 +695,10 @@ public class Step10 extends JPanel implements MouseListener,
     
     public static boolean isOriente() {
 		return oriente;
+	}
+    
+    public static boolean isValue() {
+		return value;
 	}
 
 	public void setOriente(boolean oriente) {

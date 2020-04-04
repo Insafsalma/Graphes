@@ -165,7 +165,7 @@ public class Graphe {
                         adj[i][0] = 0;
                         break;
                       }
-                    }
+                    
                     for(int j=1 ; j<=m ; j++){
                       if(adj[i][j] == 1){
                     	  prufer[k]    = j;
@@ -174,7 +174,7 @@ public class Graphe {
                         adj[j][0]--;
                         break;
                       }
-                    }
+                    }}
                   } 
         }
 		

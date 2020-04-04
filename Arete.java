@@ -19,9 +19,11 @@ public class Arete {
 	}
     
     public String getPoidstoString() {
-    	if (Step10.isOriente())
+    	if (Step10.isOriente()&&Step10.isValue())
 		return this.orig.getEtiquette()+">>"+poids+">>"+this.extr.getEtiquette();
-    	else return poids+"";
+    	else if (!Step10.isOriente()&& Step10.isValue()) return poids+"";
+    	else if (!Step10.isOriente()&& !Step10.isValue())  return ">>";
+    	else return"";
 	}
 
 	public void setPoids(int poids) {
