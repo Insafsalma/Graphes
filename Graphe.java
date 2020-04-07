@@ -16,7 +16,7 @@ public class Graphe {
 	private int[] mu=new int [Sommet.nombreSommets() +1];
 	private int[] tarj = new int [Sommet.nombreSommets() +1];
 	private boolean[] entarj =new boolean [Sommet.nombreSommets() +1];
-	private int p;
+	private int p=1;
 	private int[] prufer;
 	private int[] rang;
 	private int[] dist;
@@ -38,16 +38,18 @@ public class Graphe {
 		adj[0][1] = Arete.nombreAretes();
 		//matriceAdj();
 		//FsAps();
+	}
+	public void remplir_aretes()
+	{
 		Iterator iter = Arete.iterator();
-               while (iter.hasNext()) {
+        while (iter.hasNext()) {
         	Arete a = (Arete) iter.next();
         	for(int i=1;i<=adj[0][1];i++)
         	{
         		aretes[i]=a;
         	}
-                }
+        }
 	}
-	
 	public void matriceAdj() {
 		
 	}
@@ -448,6 +450,7 @@ public class Graphe {
 		
 		public Graphe kruskal(int[] nbElem)
 		{
+			remplir_aretes();
 			Graphe t= new Graphe();
 			t.aretes=new Arete[adj[0][0]-1];
 			int x;
