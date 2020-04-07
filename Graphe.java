@@ -38,6 +38,14 @@ public class Graphe {
 		adj[0][1] = Arete.nombreAretes();
 		//matriceAdj();
 		//FsAps();
+		Iterator iter = Arete.iterator();
+               while (iter.hasNext()) {
+        	Arete a = (Arete) iter.next();
+        	for(int i=1;i<=adj[0][1];i++)
+        	{
+        		aretes[i]=a;
+        	}
+                }
 	}
 	
 	public void matriceAdj() {
